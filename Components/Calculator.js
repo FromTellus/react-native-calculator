@@ -1,8 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 
-import addition from "../utils/addition";
-
 export default function CalculatorInput() {
   const [inputOne, setInputOne] = useState("");
   const [inputTwo, setInputTwo] = useState("");
@@ -14,7 +12,6 @@ export default function CalculatorInput() {
     if (!inputOne) {
       setInputOne(value1);
       setValue1("");
-      console.log(inputOne, "inputOne in operations");
     } else {
       setInputTwo(value1);
     }
@@ -23,7 +20,6 @@ export default function CalculatorInput() {
   function calculate() {
     switch (operator) {
       case "+":
-        console.log(inputTwo, "inputOne in addition");
         return setResult(Number(inputOne) + Number(inputTwo));
 
       case "-":
@@ -43,16 +39,12 @@ export default function CalculatorInput() {
     }
   }, [inputTwo]);
 
-
   return (
     <>
       <View>
-        <Text>This is your value: {value1 || result}</Text>
-        <Text> this is result {result}</Text>
-        <Text>Current operator: {operator}</Text>
-        <Text>Current inputOne: {inputOne}</Text>
-        <Text>Current inputTwo: {inputTwo}</Text>
-
+        <Text style={styles.value}> {result? result : value1}</Text>
+      </View>
+      <View>
         <View style={styles.container}>
           <TouchableOpacity
             style={styles.button}
@@ -87,9 +79,7 @@ export default function CalculatorInput() {
             <Text style={styles.buttonText}>{"*"}</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.button}
-          >
+          <TouchableOpacity style={styles.button}>
             <Text style={styles.buttonText}>{"<"}</Text>
           </TouchableOpacity>
 
@@ -179,12 +169,9 @@ export default function CalculatorInput() {
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
-  
               setInputTwo(value1);
-            
-                calculate();
-              
-              
+
+              calculate();
             }}
           >
             <Text style={styles.buttonText}>{"="}</Text>
@@ -258,5 +245,8 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 15,
+  },
+  value: {
+    fontSize: 50,
   },
 });

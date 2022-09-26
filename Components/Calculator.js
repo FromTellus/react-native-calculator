@@ -17,7 +17,13 @@ export default function CalculatorInput() {
     }
   }
 
-function removeLastCharacterInValue1() {
+ // add a comma to the end of value 1 if there is no comma in the string
+  function addComma() {
+    if (value1.indexOf(".") === -1) {
+      setValue1(value1 + ".");
+    }
+  }
+  function backspace() {
     setValue1(value1.slice(0, -1));
   }
 
@@ -45,13 +51,17 @@ function removeLastCharacterInValue1() {
 
   return (
     <>
-      <View>
-        <Text style={styles.value}> {result? result : value1}</Text>
+      <View style={styles.preview}>
+        <Text>{inputOne}</Text>
+        <Text>{operator}</Text>
+        <Text>{inputTwo}</Text>
+
       </View>
+        <Text style={styles.value}> {result ? result : value1}</Text>
       <View>
         <View style={styles.container}>
           <TouchableOpacity
-            style={styles.button}
+            style={styles.clearBtn}
             onPress={() => {
               setValue1("");
               setResult("");
@@ -83,14 +93,16 @@ function removeLastCharacterInValue1() {
             <Text style={styles.buttonText}>{"*"}</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity 
-          style={styles.button}
-          onPress={() => {
-            removeLastCharacterInValue1();
-          }}
-          >
-            <Text style={styles.buttonText}>{"<"}</Text>
-          </TouchableOpacity>
+          {
+            <TouchableOpacity
+              style={styles.backspaceBtn}
+              onPress={() => {
+                backspace();
+              }}
+            >
+              <Text style={styles.buttonText}>{"<"}</Text>
+            </TouchableOpacity>
+          }
 
           <TouchableOpacity
             style={styles.button}
@@ -113,15 +125,17 @@ function removeLastCharacterInValue1() {
             <Text style={styles.buttonText}>{"9"}</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              setOperator("-");
-              operations();
-            }}
-          >
-            <Text style={styles.buttonText}>{"-"}</Text>
-          </TouchableOpacity>
+          {
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => {
+                setOperator("-");
+                operations();
+              }}
+            >
+              <Text style={styles.buttonText}>{"-"}</Text>
+            </TouchableOpacity>
+          }
 
           <TouchableOpacity
             style={styles.button}
@@ -144,43 +158,42 @@ function removeLastCharacterInValue1() {
             <Text style={styles.buttonText}>{"6"}</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              setOperator("+");
-              operations();
-            }}
-          >
-            <Text style={styles.buttonText}>{"+"}</Text>
-          </TouchableOpacity>
+          {
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => {
+                setOperator("+");
+                operations();
+              }}
+            >
+              <Text style={styles.buttonText}>{"+"}</Text>
+            </TouchableOpacity>
+          }
 
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => setValue1(value1 + "1")}
-          >
-            <Text style={styles.buttonText}>{"1"}</Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => setValue1(value1 + "1")}
+            >
+              <Text style={styles.buttonText}>{"1"}</Text>
+            </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => setValue1(value1 + "2")}
-          >
-            <Text style={styles.buttonText}>{"2"}</Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => setValue1(value1 + "2")}
+            >
+              <Text style={styles.buttonText}>{"2"}</Text>
+            </TouchableOpacity>
 
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => setValue1(value1 + "3")}
+            >
+              <Text style={styles.buttonText}>{"3"}</Text>
+            </TouchableOpacity>
           <TouchableOpacity
-            style={styles.button}
-            onPress={() => setValue1(value1 + "3")}
-          >
-            <Text style={styles.buttonText}>{"3"}</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.button}
+            style={styles.calculateBtn}
             onPress={() => {
               setInputTwo(value1);
-
-              calculate();
             }}
           >
             <Text style={styles.buttonText}>{"="}</Text>
@@ -200,19 +213,23 @@ function removeLastCharacterInValue1() {
             <Text style={styles.buttonText}>{"0"}</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => console.log("future")}
-          >
-            <Text style={styles.buttonText}>{","}</Text>
+          <TouchableOpacity 
+          onPress={addComma}
+          style={styles.button}>
+            <Text style={styles.buttonText}>{"."}</Text>
           </TouchableOpacity>
         </View>
+        <View></View>
       </View>
     </>
   );
 }
 
 const styles = StyleSheet.create({
+  preview: {
+    flexDirection: "column",
+    textAlign: "center",
+  },
   button: {
     width: 75,
     height: 75,
@@ -228,6 +245,60 @@ const styles = StyleSheet.create({
     maxWidth: 100,
     fontSize: "30",
   },
+  bottomTwoRows: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "flex-start",
+    width: "75%",
+  },
+
+  clearBtn: {
+    width: 75,
+    height: 75,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    borderRadius: 4,
+    elevation: 3,
+    backgroundColor: "#FFC000",
+    margin: 10,
+    color: "black",
+    maxWidth: 100,
+    fontSize: "30",
+  },
+
+  backspaceBtn: {
+    width: 75,
+    height: 75,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    borderRadius: 4,
+    elevation: 3,
+    backgroundColor: "#FDD96A",
+    margin: 10,
+    color: "black",
+    maxWidth: 100,
+    fontSize: "30",
+  },
+
+  calculateBtn: {
+    width: 75,
+    height: 75,
+    justifyContent: "center",
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    borderRadius: 4,
+    elevation: 3,
+    backgroundColor: "#FFEFBF",
+    margin: 10,
+    color: "black",
+    maxWidth: 100,
+    fontSize: "30",
+  },
+
   text: {
     fontSize: "16",
     lineHeight: 21,
@@ -241,17 +312,10 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     flexWrap: "wrap",
+    justifyContent: "flex-start",
     width: "100%",
   },
-  resultContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "white",
-  },
-  resultBox: {
-    backgroundColor: "black",
-    flexDirection: "row",
-  },
+
   buttonText: {
     fontSize: 15,
   },

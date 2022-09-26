@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import addition from "../utils/addition";
 
@@ -15,27 +15,34 @@ export default function CalculatorInput() {
       setInputOne(value1);
       setValue1("");
       console.log(inputOne, "inputOne in operations");
+    } else {
+      setInputTwo(value1);
     }
   }
 
   function calculate() {
-    console.log(inputOne, "inputOne in calculate");
-    console.log(inputTwo, "inputTwo in calculate");
-
     switch (operator) {
       case "+":
-        return setResult(inputOne + inputTwo);
+        console.log(inputTwo, "inputOne in addition");
+        return setResult(Number(inputOne) + Number(inputTwo));
 
       case "-":
-        return subtraction(inputOne, inputTwo);
+        return setResult(Number(inputOne) - Number(inputTwo));
       case "*":
-        return multiplication(inputOne, inputTwo);
+        return setResult(Number(inputOne) * Number(inputTwo));
       case "/":
-        return division(inputOne, inputTwo);
+        setResult(Number(inputOne) / Number(inputTwo));
       default:
         return "Invalid operator";
     }
   }
+
+  useEffect(() => {
+    if (inputOne && inputTwo) {
+      calculate();
+    }
+  }, [inputTwo]);
+
 
   return (
     <>
@@ -47,175 +54,162 @@ export default function CalculatorInput() {
         <Text>Current inputTwo: {inputTwo}</Text>
 
         <View style={styles.container}>
-          <View style={styles.button}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => {
-                setValue1("");
-                setResult("");
-                setOperator("");
-                setInputOne("");
-                setInputTwo("");
-              }}
-            >
-              <Text style={styles.buttonText}>{"C"}</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.button}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => setOperator("/")}
-            >
-              <Text style={styles.buttonText}>{"/"}</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.button}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => setOperator("*")}
-            >
-              <Text style={styles.buttonText}>{"*"}</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.button}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => setValue1(Number(inputOne) / Number(inputTwo))}
-            >
-              <Text style={styles.buttonText}>{"<"}</Text>
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              setValue1("");
+              setResult("");
+              setOperator("");
+              setInputOne("");
+              setInputTwo("");
+            }}
+          >
+            <Text style={styles.buttonText}>{"C"}</Text>
+          </TouchableOpacity>
 
-          <View style={styles.button}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => setValue1(value1 + "7")}
-            >
-              <Text style={styles.buttonText}>{"7"}</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.button}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => setValue1(value1 + "8")}
-            >
-              <Text style={styles.buttonText}>{"8"}</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.button}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => setValue1(value1 + "9")}
-            >
-              <Text style={styles.buttonText}>{"9"}</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.button}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => setOperator("-")}
-            >
-              <Text style={styles.buttonText}>{"-"}</Text>
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              setOperator("/");
+              operations();
+            }}
+          >
+            <Text style={styles.buttonText}>{"/"}</Text>
+          </TouchableOpacity>
 
-          <View style={styles.button}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => setValue1(value1 + "4")}
-            >
-              <Text style={styles.buttonText}>{"4"}</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.button}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => setValue1(value1 + "5")}
-            >
-              <Text style={styles.buttonText}>{"5"}</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.button}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => setValue1(value1 + "6")}
-            >
-              <Text style={styles.buttonText}>{"6"}</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.button}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => {
-                setOperator("+");
-                operations();
-              }}
-            >
-              <Text style={styles.buttonText}>{"+"}</Text>
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              setOperator("*");
+              operations();
+            }}
+          >
+            <Text style={styles.buttonText}>{"*"}</Text>
+          </TouchableOpacity>
 
-          <View style={styles.button}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => setValue1(value1 + "1")}
-            >
-              <Text style={styles.buttonText}>{"1"}</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.button}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => setValue1(value1 + "2")}
-            >
-              <Text style={styles.buttonText}>{"2"}</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.button}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => setValue1(value1 + "3")}
-            >
-              <Text style={styles.buttonText}>{"3"}</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.button}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => {
-                operations();
+          <TouchableOpacity
+            style={styles.button}
+          >
+            <Text style={styles.buttonText}>{"<"}</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => setValue1(value1 + "7")}
+          >
+            <Text style={styles.buttonText}>{"7"}</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => setValue1(value1 + "8")}
+          >
+            <Text style={styles.buttonText}>{"8"}</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => setValue1(value1 + "9")}
+          >
+            <Text style={styles.buttonText}>{"9"}</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              setOperator("-");
+              operations();
+            }}
+          >
+            <Text style={styles.buttonText}>{"-"}</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => setValue1(value1 + "4")}
+          >
+            <Text style={styles.buttonText}>{"4"}</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => setValue1(value1 + "5")}
+          >
+            <Text style={styles.buttonText}>{"5"}</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => setValue1(value1 + "6")}
+          >
+            <Text style={styles.buttonText}>{"6"}</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              setOperator("+");
+              operations();
+            }}
+          >
+            <Text style={styles.buttonText}>{"+"}</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => setValue1(value1 + "1")}
+          >
+            <Text style={styles.buttonText}>{"1"}</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => setValue1(value1 + "2")}
+          >
+            <Text style={styles.buttonText}>{"2"}</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => setValue1(value1 + "3")}
+          >
+            <Text style={styles.buttonText}>{"3"}</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+  
+              setInputTwo(value1);
+            
                 calculate();
-              }}
-            >
-              <Text style={styles.buttonText}>{"="}</Text>
-            </TouchableOpacity>
-          </View>
+              
+              
+            }}
+          >
+            <Text style={styles.buttonText}>{"="}</Text>
+          </TouchableOpacity>
 
-          <View style={styles.button}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => console.log("percentage in future")}
-            >
-              <Text style={styles.buttonText}>{"%"}</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.button}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => setValue1(value1 + "0")}
-            >
-              <Text style={styles.buttonText}>{"0"}</Text>
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => console.log("percentage in future")}
+          >
+            <Text style={styles.buttonText}>{"%"}</Text>
+          </TouchableOpacity>
 
-          <View style={styles.button}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => console.log("future")}
-            >
-              <Text style={styles.buttonText}>{","}</Text>
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => setValue1(value1 + "0")}
+          >
+            <Text style={styles.buttonText}>{"0"}</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => console.log("future")}
+          >
+            <Text style={styles.buttonText}>{","}</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </>

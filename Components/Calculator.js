@@ -17,6 +17,10 @@ export default function CalculatorInput() {
     }
   }
 
+function removeLastCharacterInValue1() {
+    setValue1(value1.slice(0, -1));
+  }
+
   function calculate() {
     switch (operator) {
       case "+":
@@ -79,7 +83,12 @@ export default function CalculatorInput() {
             <Text style={styles.buttonText}>{"*"}</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity 
+          style={styles.button}
+          onPress={() => {
+            removeLastCharacterInValue1();
+          }}
+          >
             <Text style={styles.buttonText}>{"<"}</Text>
           </TouchableOpacity>
 

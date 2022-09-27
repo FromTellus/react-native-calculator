@@ -17,7 +17,13 @@ export default function CalculatorInput() {
     }
   }
 
- // add a comma to the end of value 1 if there is no comma in the string
+  // make number into procentage decimal
+  function procentage() {
+    if (value1) {
+      setValue1(value1 / 100);
+    }
+  }
+
   function addComma() {
     if (value1.indexOf(".") === -1) {
       setValue1(value1 + ".");
@@ -201,7 +207,7 @@ export default function CalculatorInput() {
 
           <TouchableOpacity
             style={styles.button}
-            onPress={() => console.log("percentage in future")}
+            onPress={() => procentage()}
           >
             <Text style={styles.buttonText}>{"%"}</Text>
           </TouchableOpacity>

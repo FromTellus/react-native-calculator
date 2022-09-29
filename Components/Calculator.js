@@ -7,17 +7,27 @@ export default function CalculatorInput() {
   const [value1, setValue1] = useState("");
   const [operator, setOperator] = useState();
   const [result, setResult] = useState("");
+  const [caluclation, setCaluclation] = useState(false);
 
   function operations() {
     if (!inputOne) {
       setInputOne(value1);
       setValue1("");
     } else {
+      if (caluclation) {
+        setInputOne(result);
+        setValue1("");
+        setInputTwo("");
+        setCaluclation(false);
+        setResult("");
+        console.log("how about this");
+    } else {
+      console.log("does this always run?");
       setInputTwo(value1);
+    }
     }
   }
 
-  // make number into procentage decimal
   function procentage() {
     if (value1) {
       setValue1(value1 / 100);
@@ -34,10 +44,11 @@ export default function CalculatorInput() {
   }
 
   function calculate() {
+    setCaluclation(true);
+
     switch (operator) {
       case "+":
         return setResult(Number(inputOne) + Number(inputTwo));
-
       case "-":
         return setResult(Number(inputOne) - Number(inputTwo));
       case "*":
@@ -46,12 +57,14 @@ export default function CalculatorInput() {
         setResult(Number(inputOne) / Number(inputTwo));
       default:
         return "Invalid operator";
-    }
+
+  }
   }
 
   useEffect(() => {
-    if (inputOne && inputTwo) {
+    if (inputOne.length > 0 && inputTwo.length > 0) {
       calculate();
+      setCaluclation(true);
     }
   }, [inputTwo]);
 
@@ -81,12 +94,9 @@ export default function CalculatorInput() {
 
           <TouchableOpacity
             style={styles.button}
-            onPress={() => {
-              setOperator("/");
-              operations();
-            }}
+            onPress={() => procentage()}
           >
-            <Text style={styles.buttonText}>{"/"}</Text>
+            <Text style={styles.buttonText}>{"%"}</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -112,7 +122,7 @@ export default function CalculatorInput() {
 
           <TouchableOpacity
             style={styles.button}
-            onPress={() => setValue1(value1 + "7")}
+            onPress={() => {setValue1(value1 + "7")}}
           >
             <Text style={styles.buttonText}>{"7"}</Text>
           </TouchableOpacity>
@@ -196,24 +206,20 @@ export default function CalculatorInput() {
             >
               <Text style={styles.buttonText}>{"3"}</Text>
             </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.calculateBtn}
+
+            <TouchableOpacity
+            style={styles.button}
             onPress={() => {
-              setInputTwo(value1);
+              setOperator("/");
+              operations();
             }}
           >
-            <Text style={styles.buttonText}>{"="}</Text>
+            <Text style={styles.buttonText}>{"/"}</Text>
           </TouchableOpacity>
+         
 
           <TouchableOpacity
-            style={styles.button}
-            onPress={() => procentage()}
-          >
-            <Text style={styles.buttonText}>{"%"}</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.button}
+            style={styles.button0}
             onPress={() => setValue1(value1 + "0")}
           >
             <Text style={styles.buttonText}>{"0"}</Text>
@@ -224,6 +230,18 @@ export default function CalculatorInput() {
           style={styles.button}>
             <Text style={styles.buttonText}>{"."}</Text>
           </TouchableOpacity>
+
+
+          <TouchableOpacity
+            style={styles.calculateBtn}
+            onPress={() => {
+              setInputTwo(value1);
+            }}
+          >
+            <Text style={styles.buttonText}>{"="}</Text>
+          </TouchableOpacity>
+
+
         </View>
         <View></View>
       </View>
@@ -232,18 +250,19 @@ export default function CalculatorInput() {
 }
 
 const styles = StyleSheet.create({
+
   preview: {
     flexDirection: "column",
     textAlign: "center",
   },
   button: {
-    width: 75,
-    height: 75,
+    width: "20%",
+    height: "15%",
     alignItems: "center",
     justifyContent: "center",
     paddingVertical: 12,
     paddingHorizontal: 32,
-    borderRadius: 4,
+    borderRadius: 100,
     elevation: 3,
     backgroundColor: "#72d3fe",
     margin: 10,
@@ -251,21 +270,31 @@ const styles = StyleSheet.create({
     maxWidth: 100,
     fontSize: "30",
   },
-  bottomTwoRows: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "flex-start",
-    width: "75%",
-  },
 
-  clearBtn: {
-    width: 75,
-    height: 75,
+  button0: {
+    width: "45%",
+    height: "15%",
     alignItems: "center",
     justifyContent: "center",
     paddingVertical: 12,
     paddingHorizontal: 32,
-    borderRadius: 4,
+    borderRadius: 100,
+    elevation: 3,
+    backgroundColor: "#72d3fe",
+    margin: 10,
+    color: "black",
+    fontSize: "30",
+  },
+
+
+  clearBtn: {
+    width: "20%",
+    height: "15%",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    borderRadius: 100,
     elevation: 3,
     backgroundColor: "#FFC000",
     margin: 10,
@@ -275,13 +304,13 @@ const styles = StyleSheet.create({
   },
 
   backspaceBtn: {
-    width: 75,
-    height: 75,
+    width: "20%",
+    height: "15%",
     alignItems: "center",
     justifyContent: "center",
     paddingVertical: 12,
     paddingHorizontal: 32,
-    borderRadius: 4,
+    borderRadius: 100,
     elevation: 3,
     backgroundColor: "#FDD96A",
     margin: 10,
@@ -291,12 +320,13 @@ const styles = StyleSheet.create({
   },
 
   calculateBtn: {
-    width: 75,
-    height: 75,
+    width: "20%",
+    height: "15%",
+    alignItems: "center",
     justifyContent: "center",
     paddingVertical: 12,
     paddingHorizontal: 32,
-    borderRadius: 4,
+    borderRadius: 100,
     elevation: 3,
     backgroundColor: "#FFEFBF",
     margin: 10,
@@ -320,6 +350,7 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "flex-start",
     width: "100%",
+    
   },
 
   buttonText: {
@@ -327,5 +358,6 @@ const styles = StyleSheet.create({
   },
   value: {
     fontSize: 50,
+    marginBottom: "15%",
   },
 });

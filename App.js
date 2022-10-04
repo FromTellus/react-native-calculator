@@ -1,11 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import CalculatorInput from './Components/Calculator';
+import { StyleSheet, View } from 'react-native';
+import Calculator from './Components/Calculator';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <CalculatorInput />
+      <Calculator />
       <StatusBar style="auto" />
     </View>
   );

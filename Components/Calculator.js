@@ -1,10 +1,8 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import styles from "./styles";
-import procentage from "../utils/procentage";
-import addComma from "../utils/addComma";
-import backspace from "../utils/backspace";
 import calculate from "../utils/calculate";
+import { backspace, addComma, procentage } from "../utils/utils";
 
 export default function Calculator() {
   const [inputOne, setInputOne] = useState("");
@@ -18,7 +16,6 @@ export default function Calculator() {
       setInputOne(currentValue);
       setCurrentValue("");
     } else if (inputOne && currentValue) {
-      console.log("double");
       const calculated = calculate(inputOne, currentValue, operator);
       setInputTwo(currentValue);
       setResult(calculated);
@@ -52,7 +49,6 @@ export default function Calculator() {
         setInputOne(result);
         setInputTwo("");
         setCurrentValue(value);
-        console.log("this?");
       } else {
         setResult("");
         setCurrentValue(currentValue + value);

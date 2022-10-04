@@ -1,8 +1,8 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
-import styles from "./styles";
+import styles from "../styles/styles";
 import calculate from "../utils/calculate";
-import { backspace, addComma, procentage } from "../utils/utils";
+import { backspace, addComma, percentage } from "../utils/utils";
 
 export default function Calculator() {
   const [inputOne, setInputOne] = useState("");
@@ -33,7 +33,7 @@ export default function Calculator() {
       setCurrentValue("");
       setResult(calculated);
     } else if (value === "%") {
-      procentage(currentValue, setCurrentValue);
+      percentage(currentValue, setCurrentValue);
     } else if (value === ".") {
       addComma(currentValue, setCurrentValue);
     } else if (value === "C") {
@@ -180,7 +180,6 @@ export default function Calculator() {
             <Text style={styles.buttonText}>{"="}</Text>
           </TouchableOpacity>
         </View>
-        <View></View>
       </View>
     </>
   );

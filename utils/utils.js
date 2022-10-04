@@ -6,10 +6,10 @@ const addComma = (value1, setValue1) => {
   setValue1(value1 + ".");
 }
 
-const procentage = (value1, setValue1) => {
+const percentage = (value1, setValue1) => {
   if (value1) {
     setValue1(value1 / 100);
   }
 }
 
-export { backspace, addComma, procentage };
+export { backspace, addComma, percentage };
